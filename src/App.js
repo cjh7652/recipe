@@ -1,6 +1,12 @@
-import './App.css';
 import axios from 'axios';
 import {useState, useEffect, createContext} from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './layout/Home';
+import Recipe from './layout/Recipe';
+import Category from './layout/Category';
+import Navi from './layout/Navi';
+
+
 const DataContext=createContext();
 function App({children}) {
 	const [data, setData] = useState([]);
@@ -27,7 +33,14 @@ function App({children}) {
 	useEffect(() =>{
 		getDB();
 	},[]);
-	return <DataContext.Provider value={{data, loading}}>{children}</DataContext.Provider>
+	return <DataContext.Provider value={{data, loading}}>
+		<Navi />
+		<Routes>
+			<Route path="/" element={<Home />} />	
+			<Route path="/recipe/:id" element={<Recipe />} />	
+			<Route path="/category/:category" element={<Category />} />	
+		</Routes>
+	</DataContext.Provider>
 
 }
 
